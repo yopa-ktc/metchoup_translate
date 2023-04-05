@@ -1,0 +1,98 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.value-list {
+  list-style: none;
+  margin-top: .5rem;
+  box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  max-height: 0;
+  transition: 0.3s ease-in-out;
+  padding-left: 3%;
+}
+.value-list.open {
+  max-height: 240px;
+  overflow: auto;
+}
+.value-list li {
+  position: relative;
+  height: 1.5rem;
+  background-color: #fafcfd;
+  /* padding: 1rem; */
+  /* font-size: 1.1rem; */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  opacity: 1;
+}
+
+.message{
+  color : red;
+}
+
+.error{
+  background-color: rgb(255, 255, 255);
+  color: red !important;
+  text-align: center;
+}
+
+.modalMetchoup{
+  background: linear-gradient(white, #b245bc); 
+  border-radius: 20px;
+}
+
+.textcss{
+  border-color: #f8aaff;
+}
+
+.srcArea{
+  border-width: 3px;
+  border-color: rgb(212, 255, 240);
+}
+
+.value-list li:hover {
+  background-color: rgb(88, 255, 199);
+}
+.value-list li.closed {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  opacity: 0;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
