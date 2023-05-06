@@ -66,25 +66,25 @@ export default class App extends Component{
     
     var listLanguages = [];
 
+     allLanguages.data.forEach((info) => {
+       if(info.Tables_in_martinku_metchoup_translate !== 'suggestions' ){
+         var expression = {
+           value: info.Tables_in_martinku_metchoup_translate,
+           label: info.Tables_in_martinku_metchoup_translate
+         };
+         listLanguages.push(expression);
+       }
+     })
+
     // allLanguages.data.forEach((info) => {
-    //   if(info.Tables_in_martinku_metchoup_translate !== 'suggestions' ){
+    //   if (info.Tables_in_metchoup_translate !== 'suggestions') {
     //     var expression = {
-    //       value: info.Tables_in_martinku_metchoup_translate,
-    //       label: info.Tables_in_martinku_metchoup_translate
+    //       value: info.Tables_in_metchoup_translate,
+    //       label: info.Tables_in_metchoup_translate
     //     };
     //     listLanguages.push(expression);
     //   }
     // })
-
-    allLanguages.data.forEach((info) => {
-      if(info.Tables_in_metchoup_translate !== 'suggestions' ){
-        var expression = {
-          value: info.Tables_in_metchoup_translate,
-          label: info.Tables_in_metchoup_translate
-        };
-        listLanguages.push(expression);
-      }
-    })
 
     this.setState((state)=>({suggestion: suggestion, listExpression: reponse.data, listLanguage: listLanguages, confirmationSuggestion : undefined}));
   }
@@ -144,14 +144,13 @@ export default class App extends Component{
         valueArray.push(item.textContent);
       });
 
-      const closeDropdown = () => {
-        dropdown.classList.remove('open');
-      }
+      // const closeDropdown = () => {
+      //   dropdown.classList.remove('open');
+      // }
   
       inputField.addEventListener('input', () => {
         dropdown.classList.add('open');
         let inputValue = inputField.value.toLowerCase();
-        let valueSubstring;
         if (inputValue.length > 0) {
           for (let j = 0; j < valueArray.length; j++) {
             if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
@@ -224,12 +223,11 @@ export default class App extends Component{
     try {
       event.preventDefault();
       const target = event.target;
-      var dateMail = new Date();
       const file = target.files[0];
       if(file.type === "audio/x-m4a" || file.type === "audio/wav" || file.type === "audio/mpeg" || file.type === "audio/ogg"){
         if(file.size/(1024) <= 3000){
-          this.state.son = file;
-          this.setState((state)=>({confirmationSuggestion: <p className="alert alert-success">Fichier bien enregistré !</p>})); 
+          //this.state.son = file;
+          this.setState((state)=>({son:file, confirmationSuggestion: <p className="alert alert-success">Fichier bien enregistré !</p>})); 
           setTimeout(()=> {
             this.setState((state)=>({confirmationSuggestion: undefined})); 
           }, 1500)
@@ -289,7 +287,6 @@ export default class App extends Component{
           <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#b245bc"}}>
             <a style={{color: "rgb(88, 255, 199)"}} className="nav-link" target="_blanck" href="https://metchoup.com"><i className="bi bi-arrow-left-square"></i> Back to the site <span className="sr-only">(current)</span></a>
             <button type="button" data-toggle="modal" data-target="#suggestionForm" className="nav-link btn btn-dark btn-sm">Contribute</button>
-            {/* <a style={{color: "white"}} className="navbar-brand" href="https://translate.metchoup.com">Metchoup translate</a> */}
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -301,20 +298,13 @@ export default class App extends Component{
                 </li>
 
                 <li className="nav-item">
-                  <a style={{color: "white"}} className="nav-link"><img src='united-states.png'/> Page in english</a>   
+                  <span style={{color: "white"}} className="nav-link"><img src='united-states.png' alt='english-version'/> Page in english</span>   
                 </li>
                 
                 <li className="nav-item">
-                  <a style={{color: "white"}} className="nav-link"><img src='france.png'/> Page in french</a>
+                  <span style={{color: "white"}} className="nav-link"><img src='france.png' alt='french-version'/> Page in french</span>
                 </li>
-                {/* <li className="nav-item active">
-                  <a style={{color: "rgb(88, 255, 199)"}} className="nav-link" target="_blanck" href="https://metchoup.com">Back to the site <span className="sr-only">(current)</span><i class="bi bi-arrow-right-square-fill"></i></a>
-                </li> */}
               </ul>
-              {/* <form className="form-inline my-2 my-lg-0">
-                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form> */}
             </div>
           </nav>
       </header>
@@ -430,7 +420,7 @@ export default class App extends Component{
                 <span className="visually-hidden">Loading...</span>
               </div>
               <button type="button" id="closeModal" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" disabled={this.state.confirmationSuggestion !== undefined || this.state.spinner == ""} className="btn btn-success">Save</button>
+              <button type="submit" disabled={this.state.confirmationSuggestion !== undefined || this.state.spinner === ""} className="btn btn-success">Save</button>
             </div>
           </form>
         </div>

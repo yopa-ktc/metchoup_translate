@@ -1,6 +1,6 @@
 
-//  /* Le lien de production*/ let base = 'https://translate.metchoup.com/api/';
-/* Le lien de test en local*/ let base = 'http://localhost/api/';
+  /* Le lien de production*/ let base = 'https://translate.metchoup.com/api/';
+///* Le lien de test en local*/ let base = 'http://localhost/api/';
 
 module.exports = {
     CONFIGURATION : {
