@@ -17,7 +17,8 @@ export default class App extends Component{
     this.handlerSelectSrcLanguage = this.handlerSelectSrcLanguage.bind(this);
     this.handlerSelectTrsLanguage = this.handlerSelectTrsLanguage.bind(this);
     this.customTheme = this.customTheme.bind(this);
-    this.customThemeTrs = this.customThemeTrs.bind(this);
+    this.setTranslation = this.setTranslation.bind(this);
+    this.cleanArea = this.cleanArea.bind(this);
 
     this.state = {
       listLanguage : [],
@@ -111,6 +112,10 @@ export default class App extends Component{
       this.setState((state)=>({srcLanguage: language.value, textSrc: ""}));
       const reponse = await this.Service.getExpression(language.value);
       this.setState((state)=>({listExpression: reponse.data}));
+  }
+
+  async cleanArea(){
+    this.setState((state)=>({textSrc: "", textTrs: ""}));
   }
 
   //Fonction qui permet de choisir la langue de traduction
@@ -342,8 +347,10 @@ export default class App extends Component{
       <hr/>
       <div className="row">
         <div className="col-sm">
-          <form>
+          <form class="form-control-clearable">
+            <span onClick={this.cleanArea}>x</span>
             <textarea autoFocus value={this.state.textSrc} onChange={this.handlerChange} placeholder="Write your text here..." onClick={this.setTranslation} rows="3" className="chosen-value srcArea form-control mt-1"></textarea>
+          </form>
             { !this.state.showExpressions ? '' :
                 <ul className="value-list">
                   {this.state.listExpression.map((item) => (
@@ -351,7 +358,6 @@ export default class App extends Component{
                   ))}
                 </ul>
             }
-          </form>
         </div>
 
         <div className="col-sm">

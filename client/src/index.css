@@ -45,3 +45,24 @@ code {
   max-width: 560px; /* Limite la largeur de l'élément à 560 pixels */
   height: 100%;
 }
+
+.form-control-clearable {
+  position: relative;
+}
+
+.form-control-clearable span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 10px;
+  background-color: transparent;
+  border: none;
+  height: 22px;
+  border-radius: 100px;
+}
+
+.form-control-clearable span:hover {
+  cursor: pointer;
+  background-color: #ff000078;
+}
