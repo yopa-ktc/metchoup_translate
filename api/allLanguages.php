@@ -3,7 +3,7 @@
 	include("db_connect.php");
 	$request_method = $_SERVER["REQUEST_METHOD"];
 
-	function getProducts()
+	function getLanguages()
 	{
 		global $conn;
 		$query = "SHOW TABLES IN metchoup_translate";
@@ -24,7 +24,7 @@
 		
 		case 'GET':
 			// Retrive Products
-			getProducts();
+			getLanguages();
 			break;
 		default:
 			// Invalid Request Method

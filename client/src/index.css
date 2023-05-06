@@ -1,4 +1,4 @@
-body {
+html, body {
   margin: 0;
   font-family: "Open Sans", 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -6,9 +6,42 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(235, 235, 235);
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.value-list li {
+  white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse la largeur */
+  text-overflow: ellipsis; /* Ajoute des points de suspension à la fin du texte tronqué */
+  max-width: 500px; /* Occupe 80% de la largeur de l'élément parent */
+}
+
+
+@media screen and (max-width: 767px) {
+  .value-list li {
+    max-width: 100%; /* Permet à l'élément de s'adapter à la largeur de l'écran */
+  }
+}
+
+@media screen and (max-width: 1267px) {
+  .value-list li {
+    max-width: 333px; /* Permet à l'élément de s'adapter à la largeur de l'écran */
+  }
+}
+
+#video_tutorial {
+  display: flex;
+  justify-content: center; /* Centre l'élément horizontalement */
+  height: 300px;
+}
+
+#video_tutorial iframe {
+  width: 100%; /* Permet à l'élément de prendre le maximum d'espace en largeur */
+  max-width: 560px; /* Limite la largeur de l'élément à 560 pixels */
+  height: 100%;
 }

@@ -21,7 +21,7 @@ export default class App extends Component{
 
     this.state = {
       listLanguage : [],
-      srcLanguage : "english",
+      srcLanguage : "french",
       trsLanguage : "",
       audioTrsLanguage : "",
       showExpressions : false,
@@ -324,7 +324,7 @@ export default class App extends Component{
               <Select 
                 theme={this.customTheme}
                 defaultValue={this.state.listLanguage[3]}
-                placeholder="Source language"
+                placeholder={this.state.srcLanguage}
                 options={this.state.listLanguage}
                 onChange={this.handlerSelectSrcLanguage}
               />
@@ -355,7 +355,6 @@ export default class App extends Component{
         </div>
 
         <div className="col-sm">
-            
           <textarea rows="3" id="translationText" value={this.state.textTrs} className="form-control textcss mt-1"></textarea>
           <audio id='expression_son' src={'expression_son/'+this.state.trsLanguage+'/'+this.state.audioTrsLanguage}></audio>
           <h3>
@@ -365,7 +364,7 @@ export default class App extends Component{
       
     </div>
 
-    <div align="center" style={{width : "50%", margin: "auto"}} id="video_tutorial">
+    <div id="video_tutorial">
       <iframe src="https://www.youtube.com/embed/m_1uVqzg1iw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
