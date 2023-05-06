@@ -14,25 +14,7 @@ code {
     monospace;
 }
 
-.value-list li {
-  white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
-  overflow: hidden; /* Cache le contenu qui dépasse la largeur */
-  text-overflow: ellipsis; /* Ajoute des points de suspension à la fin du texte tronqué */
-  max-width: 500px; /* Occupe 80% de la largeur de l'élément parent */
-}
 
-
-@media screen and (max-width: 767px) {
-  .value-list li {
-    max-width: 100%; /* Permet à l'élément de s'adapter à la largeur de l'écran */
-  }
-}
-
-@media screen and (max-width: 1267px) {
-  .value-list li {
-    max-width: 333px; /* Permet à l'élément de s'adapter à la largeur de l'écran */
-  }
-}
 
 #video_tutorial {
   display: flex;

@@ -17,7 +17,6 @@ export default class App extends Component{
     this.handlerSelectSrcLanguage = this.handlerSelectSrcLanguage.bind(this);
     this.handlerSelectTrsLanguage = this.handlerSelectTrsLanguage.bind(this);
     this.customTheme = this.customTheme.bind(this);
-    this.setTranslation = this.setTranslation.bind(this);
     this.cleanArea = this.cleanArea.bind(this);
 
     this.state = {
@@ -114,6 +113,7 @@ export default class App extends Component{
       this.setState((state)=>({listExpression: reponse.data}));
   }
 
+  //Button qui efface tous les champs des texts
   async cleanArea(){
     this.setState((state)=>({textSrc: "", textTrs: ""}));
   }
@@ -169,10 +169,17 @@ export default class App extends Component{
       //Mis à jour du texte dans le champ de traduction
       dropdownArray.forEach((item, index) => {
         item.addEventListener('click', (evt) => {
-          this.setState((state)=>({textSrc: item.textContent, textTrs: this.state.listTranslation[index-3].expression, audioTrsLanguage: this.state.listTranslation[index-3].expression_audio}));
-            dropdownArray.forEach(dropdown => {
-              dropdown.classList.add('closed');
-            });
+          //Si la traduction existe
+          if(this.state.listTranslation != ""){
+            this.setState((state)=>({textSrc: item.textContent, textTrs: this.state.listTranslation[index-3].expression, audioTrsLanguage: this.state.listTranslation[index-3].expression_audio}));
+          }else{
+            //Sinon dire qu'elle est en étude !
+            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <u data-toggle="modal" data-target="#suggestionForm">contribute</u></h6>}));
+          }
+          dropdownArray.forEach(dropdown => {
+            dropdown.classList.add('closed');
+          });
+          
         });   
       })
 
@@ -337,7 +344,7 @@ export default class App extends Component{
       <hr/>
       <div className="row">
         <div className="col-sm">
-          <form class="form-control-clearable">
+          <form className="form-control-clearable">
             <span onClick={this.cleanArea}>x</span>
             <textarea autoFocus value={this.state.textSrc} onChange={this.handlerChange} placeholder="Write your text here..." onClick={this.setTranslation} rows="3" className="chosen-value srcArea form-control mt-1"></textarea>
           </form>
@@ -361,7 +368,7 @@ export default class App extends Component{
     </div>
 
     <div id="video_tutorial">
-      <iframe src="https://www.youtube.com/embed/m_1uVqzg1iw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/m_1uVqzg1iw" title="YouTube video player" frameorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
     </div>
 
 
@@ -374,7 +381,7 @@ export default class App extends Component{
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form onSubmit={this.handleSubmitDoc} enctype='multipart/form-data'>
+          <form onSubmit={this.handleSubmitDoc} encType='multipart/form-data'>
             <div className="modal-body">
                 <div className="input-group input-group-sm mb-3">
                   <span className="input-group-text" id="inputGroup-sizing-sm">source language</span>
@@ -400,7 +407,7 @@ export default class App extends Component{
                   
                 <div className="custom-file mb-2">
                     <input type="file" accept=".mp3,.wav,.ogg,.m4a,.mpeg" name="expression_son" className="custom-file-input" id="validatedCustomFile" aria-describedby="customFileValidationFeedback" onChange={this.handlerChangeFile}/>
-                    <label className="custom-file-label" for="validatedCustomFile">fichier de prononciation<span className="sr-only"> (required)</span>
+                    <label className="custom-file-label" htmlFor="validatedCustomFile">fichier de prononciation<span className="sr-only"> (required)</span>
                     </label>
                     <div className="invalid-feedback" id="customFileValidationFeedback">
                         Example invalid custom file feedback
