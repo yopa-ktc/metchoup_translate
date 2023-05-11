@@ -110,7 +110,20 @@ export default class App extends Component{
   async handlerSelectSrcLanguage(language){
       this.setState((state)=>({srcLanguage: language.value, textSrc: ""}));
       const reponse = await this.Service.getExpression(language.value);
-      this.setState((state)=>({listExpression: reponse.data}));
+
+      //console.log(reponse.data)
+
+      var listExpression = [];
+
+      reponse.data.forEach((info) => {
+         var expression = {
+           id_src: info.id,
+           expression: info.expression
+         };
+         listExpression.push(expression);
+     })
+      this.setState((state)=>({listExpression: listExpression}));
+      console.log(this.state.listExpression)
   }
 
   //Button qui efface tous les champs des texts
@@ -141,6 +154,7 @@ export default class App extends Component{
       // inputField.focus(); // Demo purposes only
       let valueArray = [];
       dropdownArray.forEach(item => {
+        console.log(item)
         valueArray.push(item.textContent);
       });
 
@@ -168,17 +182,26 @@ export default class App extends Component{
   
       //Mis à jour du texte dans le champ de traduction
       dropdownArray.forEach((item, index) => {
+        
+        //index = this.state.listExpression[index-3].id;
         item.addEventListener('click', (evt) => {
+         try {
           //Si la traduction existe
           if(this.state.listTranslation != ""){
             this.setState((state)=>({textSrc: item.textContent, textTrs: this.state.listTranslation[index-3].expression, audioTrsLanguage: this.state.listTranslation[index-3].expression_audio}));
+            console.log(this.state.listExpression)
           }else{
             //Sinon dire qu'elle est en étude !
-            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <u data-toggle="modal" data-target="#suggestionForm">contribute</u></h6>}));
+            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <a href="" data-toggle="modal" data-target="#suggestionForm">contribute</a></h6>}));
           }
           dropdownArray.forEach(dropdown => {
             dropdown.classList.add('closed');
           });
+         } catch (error) {
+            console.log(error)
+            console.log(this.state.listExpression)
+         }
+          
           
         });   
       })
@@ -350,8 +373,8 @@ export default class App extends Component{
           </form>
             { !this.state.showExpressions ? '' :
                 <ul className="value-list">
-                  {this.state.listExpression.map((item) => (
-                    <li key={item.id}>{item.expression}</li>
+                  {this.state.listExpression.map((item, id) => (
+                    <li key={item.id_src}>{item.expression}</li>
                   ))}
                 </ul>
             }
