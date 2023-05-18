@@ -8,13 +8,13 @@ WORKDIR /app
 COPY . .
 
 # Installez les dépendances
-#RUN npm install
+RUN npm install
 
 # Construisez l'application
 #RUN npm run build
 
 # Définissez le port d'écoute de l'application
-EXPOSE 3500
+EXPOSE 3000
 
 # Démarrez l'application lorsque le conteneur est lancé
 CMD ["npm", "start"]

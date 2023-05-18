@@ -1,2 +1,4 @@
 /client/node_modules
 /client/build
+/public/expression_son/
+node_modules
