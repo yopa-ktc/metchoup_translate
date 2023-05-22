@@ -4,8 +4,8 @@ import json
 import mysql.connector
 
 # Ouvrir les fichiers source en mode lecture
-test_fr = open("test.fr", "r", encoding="utf-8")
-test_gho = open("test.bbj", "r", encoding="utf-8")
+test_fr = open("dev.fr", "r", encoding="utf-8")
+test_gho = open("dev.bbj", "r", encoding="utf-8")
 
 # Lire le contenu des fichiers source
 contenu_fr = test_fr.readlines()
@@ -29,7 +29,7 @@ cursor = mydb.cursor()
 
 #Stockage du ghomala
 for textgho, textfr in zip(contenu_gho, contenu_fr):
-    sql = "INSERT INTO test (gho, fr) VALUES (%s, %s)"
+    sql = "INSERT INTO dev (gho, fr) VALUES (%s, %s)"
     val = (textgho.strip(), textfr.strip())
     cursor.execute(sql, val)
     
