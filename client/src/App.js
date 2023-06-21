@@ -123,7 +123,6 @@ export default class App extends Component{
          listExpression.push(expression);
      })
       this.setState((state)=>({listExpression: listExpression}));
-      console.log(this.state.listExpression)
   }
 
   //Button qui efface tous les champs des texts
@@ -154,7 +153,7 @@ export default class App extends Component{
       // inputField.focus(); // Demo purposes only
       let valueArray = [];
       dropdownArray.forEach(item => {
-        console.log(item)
+        // console.log(item)
         valueArray.push(item.textContent);
       });
 
@@ -183,13 +182,12 @@ export default class App extends Component{
       //Mis à jour du texte dans le champ de traduction
       dropdownArray.forEach((item, index) => {
         
-        //index = this.state.listExpression[index-3].id;
+        //index = this.state.listExpression[index].id;
         item.addEventListener('click', (evt) => {
          try {
           //Si la traduction existe
           if(this.state.listTranslation != ""){
-            this.setState((state)=>({textSrc: item.textContent, textTrs: this.state.listTranslation[index-3].expression, audioTrsLanguage: this.state.listTranslation[index-3].expression_audio}));
-            console.log(this.state.listExpression)
+            this.setState((state)=>({textSrc: item.textContent, textTrs: this.state.listTranslation[index].expression, audioTrsLanguage: this.state.listTranslation[index].expression_audio}));
           }else{
             //Sinon dire qu'elle est en étude !
             this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <a href="" data-toggle="modal" data-target="#suggestionForm">contribute</a></h6>}));
@@ -199,6 +197,8 @@ export default class App extends Component{
           });
          } catch (error) {
             console.log(error)
+            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <a href="" data-toggle="modal" data-target="#suggestionForm">contribute</a></h6>}));
+
             console.log(this.state.listExpression)
          }
           
@@ -323,18 +323,20 @@ export default class App extends Component{
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active ml-3">
+                <span className="nav-item active ml-3">
                   <a style={{color: "white"}} className="navbar-brand" href="https://translate.metchoup.com">Metchoup-translate</a>
-                </li>
+                </span>
 
-                <li className="nav-item">
+                <span className="nav-item">
                   <span style={{color: "white"}} className="nav-link"><img src='united-states.png' alt='english-version'/> Page in english</span>   
-                </li>
+                </span>
                 
-                <li className="nav-item">
+                <span className="nav-item">
                   <span style={{color: "white"}} className="nav-link"><img src='france.png' alt='french-version'/> Page in french</span>
-                </li>
+                </span>
               </ul>
+              {/* <a style={{color: "white"}} href="https://translate.metchoup.com/admin">Login</a> */}
+              <a style={{color: "white"}} href="http://translate.metchoup.com/admin">Login</a>
             </div>
           </nav>
       </header>
