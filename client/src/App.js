@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import React, { Component } from 'react';
-// import {link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import Select from 'react-select';
 // import AsyncSelect from 'react-select/async';
 import './App.css';
@@ -186,18 +186,18 @@ export default class App extends Component{
         item.addEventListener('click', (evt) => {
          try {
           //Si la traduction existe
-          if(this.state.listTranslation != ""){
+          if(this.state.listTranslation !== ""){
             this.setState((state)=>({textSrc: item.textContent, textTrs: this.state.listTranslation[index].expression, audioTrsLanguage: this.state.listTranslation[index].expression_audio}));
           }else{
             //Sinon dire qu'elle est en étude !
-            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <a href="" data-toggle="modal" data-target="#suggestionForm">contribute</a></h6>}));
+            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <span data-toggle="modal" data-target="#suggestionForm">contribute</span></h6>}));
           }
           dropdownArray.forEach(dropdown => {
             dropdown.classList.add('closed');
           });
          } catch (error) {
             console.log(error)
-            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <a href="" data-toggle="modal" data-target="#suggestionForm">contribute</a></h6>}));
+            this.setState((state)=>({message: <h6 className="message">That translation doesnt exist, please <span data-toggle="modal" data-target="#suggestionForm">contribute</span></h6>}));
 
             console.log(this.state.listExpression)
          }
@@ -335,8 +335,8 @@ export default class App extends Component{
                   <span style={{color: "white"}} className="nav-link"><img src='france.png' alt='french-version'/> Page in french</span>
                 </span>
               </ul>
-              {/* <a style={{color: "white"}} href="https://translate.metchoup.com/admin">Login</a> */}
-              <a style={{color: "white"}} href="http://translate.metchoup.com/admin">Login</a>
+   
+              <a style={{color: "white"}} href="/admin">Login</a>
             </div>
           </nav>
       </header>
