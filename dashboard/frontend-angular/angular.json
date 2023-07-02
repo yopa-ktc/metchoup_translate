@@ -13,9 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/frontend-angular",
+            "outputPath": "dist/admin",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "crossOrigin": "anonymous",
             "polyfills": [
               "zone.js"
             ],
