@@ -1,18 +1,30 @@
 
 <div>
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(element) : null"
+                          [checked]="selection.isSelected(element)"
+                          [aria-label]="checkboxLabel(element)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
       <!-- Position Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="auteur">
-        <th mat-header-cell *matHeaderCellDef> Auteur </th>
-        <td mat-cell *matCellDef="let element"> {{element.emailPersonne}} </td>
       </ng-container>
 
       <!-- Weight Column -->
@@ -22,15 +34,15 @@
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="langue.traduction">
-        <th mat-header-cell *matHeaderCellDef> Langue traduction </th>
-        <td mat-cell *matCellDef="let element"> {{element.langueTraduite}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
       <ng-container matColumnDef="Expression originale">
         <th mat-header-cell *matHeaderCellDef> Expression originale </th>
         <td mat-cell *matCellDef="let element"> {{element.expressionSource}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="langue.traduction">
+        <th mat-header-cell *matHeaderCellDef> Langue traduction </th>
+        <td mat-cell *matCellDef="let element"> {{element.langueTraduite}} </td>
       </ng-container>
 
       <!-- Symbol Column -->
@@ -38,6 +50,13 @@
         <th mat-header-cell *matHeaderCellDef> Expression traduite</th>
         <td mat-cell *matCellDef="let element"> {{element.expressionTraduite}} </td>
       </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="auteur">
+        <th mat-header-cell *matHeaderCellDef> Auteur </th>
+        <td mat-cell *matCellDef="let element"> {{element.emailPersonne}} </td>
+      </ng-container>
+
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="audio">

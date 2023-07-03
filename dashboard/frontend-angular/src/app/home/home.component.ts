@@ -1,48 +1,52 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatSort, MatSortModule} from '@angular/material/sort';
 import { Suggestion } from '../Entities/suggestion';
 import { MatIconModule } from '@angular/material/icon';
 import { SuggestionService } from '../services/suggestions.service';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {SelectionModel} from '@angular/cdk/collections';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatIconModule]
+  imports: [MatTableModule, MatPaginatorModule, MatIconModule, MatSortModule, MatCheckboxModule, DatePipe]
 })
-
 
 export class HomeComponent implements AfterViewInit, OnInit {
 
   public displayedColumns: string[] = [
     'id',
-    'auteur',
-    'langue.source',
-    'langue.traduction',
     'Expression originale',
+    'langue.source',
     'Expression traduite',
+    'langue.traduction',
     'audio',
+    'auteur',
     'Date ajout'];
 
-  dataSource = new MatTableDataSource<Suggestion>();
+  dataSource = new MatTableDataSource<Suggestion>;
+  selection = new SelectionModel<Suggestion>(true, []);
 
   constructor(private suggestionService : SuggestionService){}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit() {
     this.suggestionService.getSuggestions().subscribe((
       Resultat_requete: Suggestion[]) => {
-        console.log(Resultat_requete)
         this.dataSource.data = Resultat_requete;
-      });
+    });
   }
 
   playAudio(audioUrl: string) {
@@ -81,4 +85,28 @@ export class HomeComponent implements AfterViewInit, OnInit {
       }
     }
     // return date.toLocaleDateString(); // Vous pouvez ajuster le format selon vos besoins
+
+    isAllSelected() {
+      const numSelected = this.selection.selected.length;
+      const numRows = this.dataSource.data.length;
+      return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    toggleAllRows() {
+      if (this.isAllSelected()) {
+        this.selection.clear();
+        return;
+      }
+
+      this.selection.select(...this.dataSource.data);
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: Suggestion): string {
+      if (!row) {
+        return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+      }
+      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    }
 }
