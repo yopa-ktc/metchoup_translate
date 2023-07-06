@@ -1,25 +1,27 @@
 
-<div>
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+<mat-toolbar color="primary" class="navbar">
+  <div>
+    <a mat-icon-button href="https://translate.metchoup.com">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Back to site</span>
+    </a>
+  </div>
+  <div>
+    <span><a mat-button routerLink="/home">Home</a></span>
+    <span><a mat-button routerLink="/settings">Settings</a></span>
+    <span><a mat-button routerLink="login">Login</a></span>
+  </div>
+</mat-toolbar>
 
-        <!-- Checkbox Column -->
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                          [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()"
-                          [aria-label]="checkboxLabel()">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox (click)="$event.stopPropagation()"
-                          (change)="$event ? selection.toggle(element) : null"
-                          [checked]="selection.isSelected(element)"
-                          [aria-label]="checkboxLabel(element)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
+
+<div>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8 demo-table">
+    <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Position Column -->
       <ng-container matColumnDef="id">
@@ -35,7 +37,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="Expression originale">
-        <th mat-header-cell *matHeaderCellDef> Expression originale </th>
+        <th mat-header-cell *matHeaderCellDef> original Expression </th>
         <td mat-cell *matCellDef="let element"> {{element.expressionSource}} </td>
       </ng-container>
 
@@ -59,24 +61,23 @@
 
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="audio">
+      <!-- <ng-container matColumnDef="audio">
         <th mat-header-cell *matHeaderCellDef> audio </th>
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button (click)="playAudio(element.audio)">
             <mat-icon>play_arrow</mat-icon>
           </button>
         </td>
-      </ng-container>
+      </ng-container> -->
 
-      <!-- Symbol Column -->
+      <!-- Date Column -->
       <ng-container matColumnDef="Date ajout">
         <th mat-header-cell *matHeaderCellDef> Date ajout </th>
-        <td mat-cell *matCellDef="let element"> {{getDate(element.dateAjout) }}</td>
+        <td mat-cell *matCellDef="let element"> {{getDate(element.dateAjout)}}</td>
       </ng-container>
 
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"

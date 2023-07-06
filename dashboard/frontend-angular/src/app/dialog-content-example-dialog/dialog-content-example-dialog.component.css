@@ -1,0 +1,17 @@
+.dialog-perso{
+  background-color: white;
+}
+
+p{
+  color: black;
+}
+
+h1{
+  color: black;
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+}
+

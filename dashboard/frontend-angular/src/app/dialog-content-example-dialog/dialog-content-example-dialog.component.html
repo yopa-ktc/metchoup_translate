@@ -1,0 +1,41 @@
+<div>
+  <form (ngSubmit)="onSubmit()" #suggestionForm="ngForm">
+    <mat-dialog-content class="dialog-perso">
+      <h1>Vérifiez la traduction <b>{{ data.id }}</b> de : <b>{{data.emailPersonne}}</b> </h1>
+      <hr>
+      <p class="button-row">
+        <span class="label_button_lecture">Lire</span>
+        <button mat-icon-button (click)="playAudio(data.audio)">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+      </p>
+        <mat-form-field>
+          <mat-label>Langue source</mat-label>
+          <input matInput name="langueSource" [(ngModel)]="data.langueSource" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Langue traduite</mat-label>
+          <input matInput name="langueTraduite" [(ngModel)]="data.langueTraduite" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Expression source</mat-label>
+          <input matInput name="expressionSource" [(ngModel)]="data.expressionSource" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Expression traduite</mat-label>
+          <input matInput name="expressionTraduite" [(ngModel)]="data.expressionTraduite" required>
+        </mat-form-field>
+
+        <!-- <button mat-raised-button color="primary" type="submit" [disabled]="!suggestionForm.form.valid">Enregistrer</button> -->
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button (click)="delete(data)" color="warn" mat-dialog-close>Delete</button>
+      <button mat-raised-button (click)="save(data)">Save</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial type="submit" [disabled]="!suggestionForm.form.valid">Publish</button>
+    </mat-dialog-actions>
+  </form>
+</div>

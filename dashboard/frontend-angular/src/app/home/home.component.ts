@@ -1,21 +1,22 @@
 import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule} from '@angular/material/table';
-import { MatSort, MatSortModule} from '@angular/material/sort';
+import { MatPaginator} from '@angular/material/paginator';
+import { MatTableDataSource} from '@angular/material/table';
+import { MatSort} from '@angular/material/sort';
 import { Suggestion } from '../Entities/suggestion';
-import { MatIconModule } from '@angular/material/icon';
 import { SuggestionService } from '../services/suggestions.service';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
-import {DatePipe} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogContentExampleDialogComponent } from '../dialog-content-example-dialog/dialog-content-example-dialog.component';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatIconModule, MatSortModule, MatCheckboxModule, DatePipe]
+  // standalone: true,
+  // imports: [MatTableModule, MatButtonModule, MatToolbarModule, MatDialogModule, MatPaginatorModule, MatIconModule, MatSortModule, MatCheckboxModule,MatInputModule]
 })
+
 
 export class HomeComponent implements AfterViewInit, OnInit {
 
@@ -25,14 +26,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
     'langue.source',
     'Expression traduite',
     'langue.traduction',
-    'audio',
+    // 'audio',
     'auteur',
     'Date ajout'];
 
   dataSource = new MatTableDataSource<Suggestion>;
   selection = new SelectionModel<Suggestion>(true, []);
 
-  constructor(private suggestionService : SuggestionService){}
+  constructor(private suggestionService : SuggestionService, public dialog: MatDialog){}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,16 +43,32 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  ngOnInit() {
-    this.suggestionService.getSuggestions().subscribe((
-      Resultat_requete: Suggestion[]) => {
-        this.dataSource.data = Resultat_requete;
+  openDialog(row: Suggestion) {
+    const dialogRef = this.dialog.open(DialogContentExampleDialogComponent, {
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result', row);
     });
   }
 
-  playAudio(audioUrl: string) {
-    const audio = new Audio(audioUrl);
-    audio.play();
+  ngOnInit() {
+    this.suggestionService.getSuggestions().subscribe((
+      Resultat_requete: Suggestion[]) => {
+        // this.dataSource.data = Resultat_requete;
+        this.dataSource.data = Resultat_requete.sort(this.compareDates);
+    });
+  }
+
+  // playAudio(audioUrl: string) {
+  //   const audio = new Audio(audioUrl);
+  //   audio.play();
+  // }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   getDate(dateAjout: string): any {
@@ -85,6 +102,19 @@ export class HomeComponent implements AfterViewInit, OnInit {
       }
     }
     // return date.toLocaleDateString(); // Vous pouvez ajuster le format selon vos besoins
+
+    compareDates(a: Suggestion, b: Suggestion): number {
+      const dateA = new Date(a.dateAjout);
+      const dateB = new Date(b.dateAjout);
+
+      if (dateA > dateB) {
+        return -1; // a est supérieur à b
+      } else if (dateA < dateB) {
+        return 1; // a est inférieur à b
+      } else {
+        return 0; // les dates sont égales
+      }
+    }
 
     isAllSelected() {
       const numSelected = this.selection.selected.length;
