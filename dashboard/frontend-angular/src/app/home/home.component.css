@@ -4,7 +4,7 @@ table {
 
 .mat-mdc-form-field {
   font-size: 14px;
-  width: 50%;
+  /* width: 50%; */
 }
 
 .mat-mdc-row .mat-mdc-cell {
@@ -29,3 +29,26 @@ table {
 span{
   padding-right: 1rem;
 }
+
+.filter-container {
+  justify-content: center;
+  display: flex;
+}
+
+.titre{
+  text-align: center!important;
+  margin-top: 6px;
+}
+
+.addTraductionSelect{
+  width: 240px;
+}
+
+.searchBlock{
+  width: 240px;
+  color: aliceblue!important;
+  background-color: rgb(72, 4, 80)!important;
+}
+
+
+

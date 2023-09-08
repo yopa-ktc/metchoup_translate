@@ -4,9 +4,13 @@ import { MatTableDataSource} from '@angular/material/table';
 import { MatSort} from '@angular/material/sort';
 import { Suggestion } from '../Entities/suggestion';
 import { SuggestionService } from '../services/suggestions.service';
+import { ManageFileService } from '../services/manage-file.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogContentExampleDialogComponent } from '../dialog-content-example-dialog/dialog-content-example-dialog.component';
+import { DialogFromFileComponent } from '../dialog-from-file/dialog-from-file.component';
+import { ExpressionObject } from '../Entities/expression-object';
+import { UsersService } from '../services/user.service';
 
 
 @Component({
@@ -20,6 +24,7 @@ import { DialogContentExampleDialogComponent } from '../dialog-content-example-d
 
 export class HomeComponent implements AfterViewInit, OnInit {
 
+  spinnerView = false;
   public displayedColumns: string[] = [
     'id',
     'Expression originale',
@@ -32,8 +37,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   dataSource = new MatTableDataSource<Suggestion>;
   selection = new SelectionModel<Suggestion>(true, []);
+  languageToTranslate : string | null = null;
+  expressionAndLine!: ExpressionObject;
 
-  constructor(private suggestionService : SuggestionService, public dialog: MatDialog){}
+  constructor(private suggestionService : SuggestionService, private userService : UsersService, private manageFileService: ManageFileService, public dialog: MatDialog){}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,7 +50,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openDialog(row: Suggestion) {
+  openDialogSuggestion(row: Suggestion) {
     const dialogRef = this.dialog.open(DialogContentExampleDialogComponent, {
       data: row
     });
@@ -53,7 +60,12 @@ export class HomeComponent implements AfterViewInit, OnInit {
     });
   }
 
+  // openDialogFromFile(langue){
+  //   console.log("aller chercher le fichier !")
+  // }
+
   ngOnInit() {
+    this.languageToTranslate =  this.userService.isConnected().language
     this.suggestionService.getSuggestions().subscribe((
       Resultat_requete: Suggestion[]) => {
         // this.dataSource.data = Resultat_requete;
@@ -139,4 +151,30 @@ export class HomeComponent implements AfterViewInit, OnInit {
       }
       return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
     }
+
+    onLanguageSelected(event: any){
+      const lang = event.value;
+      this.spinnerView = true;
+      this.manageFileService.getExpressionFile(lang).subscribe((
+
+          Resultat_requete: ExpressionObject) => {
+            this.spinnerView = false;
+          this.expressionAndLine = Resultat_requete
+          const dialogRef = this.dialog.open(DialogFromFileComponent, {
+            data: {
+                expression: this.expressionAndLine.currentTextToTranslate,
+                lang: lang,
+                currentLine: this.expressionAndLine.currentLine
+            },
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            this.languageToTranslate = null;
+          });
+
+      });
+
+    }
+
+
 }

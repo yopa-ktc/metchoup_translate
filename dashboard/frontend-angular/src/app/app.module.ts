@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatSelectModule} from '@angular/material/select';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HomeComponent } from './home/home.component';
 import { DialogContentExampleDialogComponent } from './dialog-content-example-dialog/dialog-content-example-dialog.component';
+import { DialogFromFileComponent } from './dialog-from-file/dialog-from-file.component';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { DialogContentExampleDialogComponent } from './dialog-content-example-di
     UserComponent,
     SettingsComponent,
     HomeComponent,
-    DialogContentExampleDialogComponent
+    DialogContentExampleDialogComponent,
+    DialogFromFileComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { DialogContentExampleDialogComponent } from './dialog-content-example-di
     AppRoutingModule,
     HttpClientModule,
     MatDialogModule,
-    MatTableModule,FormsModule, MatButtonModule, MatToolbarModule, MatPaginatorModule, MatIconModule, MatSortModule, MatCheckboxModule,MatInputModule],
+    MatTableModule,FormsModule, MatButtonModule, MatToolbarModule, MatPaginatorModule, MatIconModule,
+    MatSortModule, MatCheckboxModule,MatInputModule, MatSelectModule],
   providers: [],
   bootstrap: [AppComponent]
 })

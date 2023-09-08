@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
+import { Router } from '@angular/router';
 import { Observable, throwError, of, catchError } from 'rxjs';
 
 import { User } from '../Entities/user';
@@ -11,33 +11,53 @@ import { User } from '../Entities/user';
 
 export class UsersService {
 
-  private readonly LANGUES_API_URL = 'http://localhost:8080/users';
+  private PASSWORD_TEACHERS = "237H@dewa"
+  private TEACHERS_EMAILS = [
+    {email:"guytowagmt@gmail.com",language: "medumba"},
+    {email:"ehop94@yahoo.com",language: "bassa"},
+    {email:"ewondo.jenner@hotmail.com", language: "fangBeti"},
+    {email:"louistematio43@gmail.com",language: "yemba"},
+    {email:"mchristabel2017@gmail.com",language: "medumba"},
+    {email:"aissatadakuyo@gmail.com",language: "dioula"},
+    {email:"jacquesmakaninzo@gmail.com",language: "kikongo"},
+    {email:"sebaimhotep@gmail.com",language: "medunetcher"},
+    {email:"delwendesakande@gmail.com",language: "moore"},
+    {email:"dossoruthdemguher@gmail.com",language: "fufulde"},
+    {email:"Kevinemaffo96@gmail.com",language: "ghomala"},
+    {email:"zambopatrick7@gmail.com", language: "fangBeti"}
+  ]
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  public getLanguages(): Observable<User[]> {
-    return this.http.get<User[]>(this.LANGUES_API_URL).pipe(
-      catchError(this.handleHttpError));
+
+  public isConnected(){
+    const userDataString = localStorage.getItem('userStatus');
+    // console.log(localStorage.getItem('userStatus'))
+    if (userDataString) {
+      return JSON.parse(userDataString);
+    }else{
+      return false
+    }
   }
 
-  // public addLanguage(data: object): void{
-  //   // console.log(data)
-  //   this.http.post(this.ADD_API_URL, data).subscribe(
-  //     (Response) => {console.log("objet ajouté")}
-  //   )
-  // }
+  public login(username: string, password: string){
+    let response = false;
+    if(this.TEACHERS_EMAILS.some(teacher => teacher.email === username) && password == this.PASSWORD_TEACHERS){
+      let userStatus = {
+        name:username,
+        language: this.TEACHERS_EMAILS.find(teacher => teacher.email === username)?.language,
+        connected: true
+      }
+      localStorage.setItem('userStatus', JSON.stringify(userStatus));
+      response = true
+    }
+    return response
+  }
 
-  // public editLanguage(data: object, id: number): void{
-  //   this.http.post(this.GET_LANGUAGE_URL + "/" + id, data).subscribe(
-  //     (Response) => {console.log("objet modifié")}
-  //   )
-  // }
-
-  // public getLanguage(id: any): Observable<ILangue>{
-  //   return this.http.get<ILangue>(this.GET_LANGUAGE_URL + '/' + id).pipe(
-  //     catchError(this.handleHttpError));
-  // }
+  public logout(){
+    localStorage.removeItem('userStatus');
+  }
 
   handleHttpError(err: HttpErrorResponse) {
     let error: string;

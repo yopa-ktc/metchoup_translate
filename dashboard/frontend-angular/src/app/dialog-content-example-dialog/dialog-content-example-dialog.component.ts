@@ -21,9 +21,9 @@ export class DialogContentExampleDialogComponent {
     //Envoyer un mail
   }
 
-  publish(data: any){
-    alert("suggestion publiée !")
-  }
+  // publish(data: any){
+  //   alert("suggestion publiée !")
+  // }
 
   delete(data: any){
 
