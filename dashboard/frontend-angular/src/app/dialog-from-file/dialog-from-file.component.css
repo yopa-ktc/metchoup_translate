@@ -3,15 +3,26 @@
 }
 
 .mdc-dialog__content>:last-child{
-  width: 500px!important;
+  width: 435px!important;
 }
 
 .textFiletranslated{
   width: 435px;
 }
 
+#head-lines{
+  color: rgb(255, 255, 255);
+  padding-left: 2rem;
+}
+
+#head-line{
+  color: #70f874;
+}
+
+
 #textFileTotranslate{
-  color: greenyellow;
+  color: rgb(254, 115, 236);
+  font-weight: bold;
 }
 
 .custom-snackbar {

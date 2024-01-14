@@ -49,6 +49,13 @@ button[type="submit"]:hover {
   background-color: #9d00ff; /* Couleur de fond du bouton en survol */
 }
 
+.background-component{
+  background-image: url('../../assets/img/metchoup_coffee.jpg'); /* Remplacez 'votre-image.jpg' par le chemin vers votre image */
+  background-size: cover; /* Ajustez la taille de l'image pour couvrir toute la fenêtre */
+  background-repeat: no-repeat; /* Évitez la répétition de l'image */
+  background-attachment: fixed; /* Fixez l'image en arrière-plan pour qu'elle ne défiler pas avec le contenu */
+}
+
 .error {
   background-color: #d72424; /* Couleur de fond verte */
   color: #fff; /* Couleur du texte en blanc */

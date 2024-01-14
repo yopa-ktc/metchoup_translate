@@ -1,10 +1,12 @@
-<h2 mat-dialog-title>Ajouter une traduction depuis le fichier</h2>
+<h2 id="head-line" mat-dialog-title><b>{{data.currentLine-1}}</b> traduction(s) :::
+  <u>Solde : {{(data.currentLine-1)*50}} FCFA</u></h2>
+<p id="head-lines">Encore {{201-data.currentLine}} expressions pour retirer votre solde.</p>
 <hr>
 <form (ngSubmit)="onSubmit()" #suggestionForm="ngForm">
   <mat-dialog-content class="mat-typography">
       <h3 id="textFileTotranslate">{{data.expression}}</h3>
       <mat-form-field class="textFiletranslated">
-        <mat-label>text en langue</mat-label>
+        <mat-label>texte en {{data.lang}}</mat-label>
         <input [(ngModel)]="textFiletranslated" name="textFiletranslated" matInput placeholder="ecrivez votre traduction du texte ci dessus...">
         <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
       </mat-form-field>
@@ -17,8 +19,8 @@
       </mat-form-field> -->
 
       <div class="audio-recorder">
-        <button mat-raised-button (click)="startRecording()" [disabled]="recording">Démarrer l'enregistrement</button>
-        <button mat-raised-button (click)="stopRecording()" [disabled]="!recording">Arrêter l'enregistrement</button>
+        <button mat-raised-button color="accent" (click)="startRecording()" [disabled]="recording">Lancer l'enregistrement</button>
+        <button mat-raised-button (click)="stopRecording()" [disabled]="!recording">Stopper l'enregistrement</button>
         <audio *ngIf="recordedBlobURL" [(ngModel)]="recordedBlobURL" controls [src]="recordedBlobURL"></audio>
       </div>
 
@@ -28,8 +30,8 @@
       </mat-form-field> -->
 
   </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Annuler</button>
+  <mat-dialog-actions>
+    <button  mat-raised-button mat-dialog-close color="warn">Annuler</button>
 
     <button type="submit"
       mat-button mat-raised-button color="primary"

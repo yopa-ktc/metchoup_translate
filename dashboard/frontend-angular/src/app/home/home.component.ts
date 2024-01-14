@@ -37,7 +37,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
   dataSource = new MatTableDataSource<Suggestion>;
   selection = new SelectionModel<Suggestion>(true, []);
-  languageToTranslate : string | null = null;
+  languageToTranslate = ""
   expressionAndLine!: ExpressionObject;
 
   constructor(private suggestionService : SuggestionService, private userService : UsersService, private manageFileService: ManageFileService, public dialog: MatDialog){}
@@ -65,7 +65,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
   // }
 
   ngOnInit() {
-    this.languageToTranslate =  this.userService.isConnected().language
+    this.languageToTranslate = this.userService.isConnected().language
     this.suggestionService.getSuggestions().subscribe((
       Resultat_requete: Suggestion[]) => {
         // this.dataSource.data = Resultat_requete;
@@ -152,10 +152,9 @@ export class HomeComponent implements AfterViewInit, OnInit {
       return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
     }
 
-    onLanguageSelected(event: any){
-      const lang = event.value;
+    onLanguageSelected(language: string){
       this.spinnerView = true;
-      this.manageFileService.getExpressionFile(lang).subscribe((
+      this.manageFileService.getExpressionFile(language).subscribe((
 
           Resultat_requete: ExpressionObject) => {
             this.spinnerView = false;
@@ -163,13 +162,12 @@ export class HomeComponent implements AfterViewInit, OnInit {
           const dialogRef = this.dialog.open(DialogFromFileComponent, {
             data: {
                 expression: this.expressionAndLine.currentTextToTranslate,
-                lang: lang,
+                lang: language,
                 currentLine: this.expressionAndLine.currentLine
             },
           });
 
           dialogRef.afterClosed().subscribe(result => {
-            this.languageToTranslate = null;
           });
 
       });

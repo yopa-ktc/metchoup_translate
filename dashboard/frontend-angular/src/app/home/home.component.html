@@ -2,18 +2,7 @@
   <h1 class="titre"><b>Liste des suggestions de traductions</b></h1>
   <hr>
   <div class="filter-container">
-    <mat-form-field class="addTraductionSelect">
-      <mat-label>Ajoute une  traduction</mat-label>
-      <mat-select  [(value)]="languageToTranslate" (selectionChange)="onLanguageSelected($event)" >
-        <mat-option value="moore">moore</mat-option>
-        <mat-option value="fangBeti">fangBeti</mat-option>
-        <mat-option value="Kikongo">Kikongo</mat-option>
-        <mat-option value="yemba">yemba</mat-option>
-        <mat-option value="fufulde">fufulde</mat-option>
-        <mat-option value="nguemba">nguemba</mat-option>
-        <mat-option value="medumba">medumba</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <button (click)="onLanguageSelected(languageToTranslate)" mat-raised-button color="primary">Ajouter une traduction de {{languageToTranslate}}</button>
   </div>
   <div class="spinner" *ngIf=this.spinnerView></div>
   <mat-form-field class="searchBlock">

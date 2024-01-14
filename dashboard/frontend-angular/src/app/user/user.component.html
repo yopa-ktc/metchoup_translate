@@ -1,22 +1,24 @@
 <hr>
-<div class="login-container">
-  <h2>Ingia</h2>
-  <form (ngSubmit)="onLoginSubmit()">
+<div class="background-component">
+  <div class="login-container">
+    <h2>Ingia</h2>
+    <form (ngSubmit)="onLoginSubmit()">
 
-    <div class="form-group">
-      <label for="username">jina</label>
-      <input type="text" id="jina" placeholder="nom / email" name="jina"
-        [(ngModel)]="loginData.username" required>
-    </div>
-    <div class="form-group">
-      <label for="password">nenosiri</label>
-      <input type="password" placeholder="mot de passe" id="nenosiri"
-        name="nenosiri" [(ngModel)]="loginData.password" required>
-    </div>
-    <p *ngIf=this.stateLogin class="error">jina mbaya au nenosiri !</p>
-    <br>
-    <button mat-raised-button color="primary" type="submit">Ingia</button>
-  </form>
+      <div class="form-group">
+        <label for="username">jina</label>
+        <input type="text" id="jina" placeholder="nom / email" name="jina"
+          [(ngModel)]="loginData.username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">nenosiri</label>
+        <input type="password" placeholder="mot de passe" id="nenosiri"
+          name="nenosiri" [(ngModel)]="loginData.password" required>
+      </div>
+      <p *ngIf=this.stateLogin class="error">jina mbaya au nenosiri !</p>
+      <br>
+      <button mat-raised-button color="primary" type="submit">Ingia</button>
+    </form>
+  </div>
 </div>
 
 
