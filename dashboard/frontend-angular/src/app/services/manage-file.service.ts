@@ -17,16 +17,18 @@ export class ManageFileService {
 
   constructor(private http: HttpClient) { }
 
-  public getExpressionFile(language: string): Observable<ExpressionObject>{
-    return this.http.get<ExpressionObject>(this.GET_EXPRESSION_TO_TRANSLATE_FILE+language);
+  public getExpressionFile(language: string, teacher:string): Observable<ExpressionObject>{
+    return this.http.get<ExpressionObject>(this.GET_EXPRESSION_TO_TRANSLATE_FILE+language+'/'+teacher);
   }
 
-  public postTranslation(language: string, expressionTranslated:string, currentLine:number):Observable<any>{
+  public postTranslation(language: string, expressionTranslated:string, currentLine:number, teacher:string):Observable<any>{
     const requestBody = {
       language: language,
       expressionTranslated: expressionTranslated,
-      currentLine: currentLine
+      currentLine: currentLine,
+      teacher:teacher
     };
+
     return this.http.post<any>(this.POST_EXPRESSION_TO_TRANSLATE, requestBody);
   }
 

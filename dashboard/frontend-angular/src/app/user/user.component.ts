@@ -36,7 +36,6 @@ export class UserComponent {
     const response = this.userService.login(this.loginData.username, this.loginData.password)
     if(response){
       this.router.navigate(['/home']);
-      window.location.reload();
     }else{
       this.stateLogin = !this.stateLogin
     }

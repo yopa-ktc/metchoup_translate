@@ -51,4 +51,9 @@ span{
 }
 
 
-
+#close-session{
+  position: fixed;
+  top: 9%;
+  left: 93%;
+  z-index: 1000;
+}

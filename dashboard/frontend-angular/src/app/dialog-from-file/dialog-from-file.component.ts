@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ManageFileService } from '../services/manage-file.service';
+import { UsersService } from '../services/user.service';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { ManageFileService } from '../services/manage-file.service';
 export class DialogFromFileComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              private userService : UsersService,
               private manageFileService: ManageFileService,
               private dialogRef: MatDialogRef<DialogFromFileComponent>) {
 
@@ -33,7 +35,7 @@ export class DialogFromFileComponent implements OnInit {
 
   onSubmit() {
     this.spinnerView = true;
-    this.manageFileService.postTranslation(this.data.lang, this.textFiletranslated, this.data.currentLine).subscribe(
+    this.manageFileService.postTranslation(this.data.lang, this.textFiletranslated, this.data.currentLine,this.userService.isConnected().name).subscribe(
       (response) => {
         if(response.message === "Expression inserted successfully") {
           this.spinnerView = false;
@@ -60,22 +62,6 @@ export class DialogFromFileComponent implements OnInit {
     console.log(sheetName, expression, ligneCellule);
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-
-    if (file) {
-      // Faites ce que vous voulez avec le fichier, par exemple l'afficher dans la console
-      console.log('Fichier audio sélectionné :', file);
-
-      // Vous pouvez également utiliser FileReader pour lire le contenu du fichier si nécessaire
-      const fileReader = new FileReader();
-      fileReader.onload = (e: any) => {
-        const audioData = e.target.result;
-        console.log('Données audio :', audioData);
-      };
-      fileReader.readAsArrayBuffer(file);
-    }
-  }
 
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })

@@ -1,13 +1,13 @@
-<h2 id="head-line" mat-dialog-title><b>{{data.currentLine-1}}</b> traduction(s) :::
-  <u>Solde : {{(data.currentLine-1)*50}} FCFA</u></h2>
-<p id="head-lines">Encore {{201-data.currentLine}} expressions pour retirer votre solde.</p>
+<h2 id="head-line" mat-dialog-title><b>{{data.occurencyTeacher}}</b> traduction(s) :::
+  Solde : {{(data.occurencyTeacher)*50}} FCFA</h2>
+<p id="head-lines">Encore {{200-data.occurencyTeacher}} expressions pour retirer votre solde.</p>
 <hr>
 <form (ngSubmit)="onSubmit()" #suggestionForm="ngForm">
   <mat-dialog-content class="mat-typography">
       <h3 id="textFileTotranslate">{{data.expression}}</h3>
       <mat-form-field class="textFiletranslated">
         <mat-label>texte en {{data.lang}}</mat-label>
-        <input [(ngModel)]="textFiletranslated" name="textFiletranslated" matInput placeholder="ecrivez votre traduction du texte ci dessus...">
+        <input required [(ngModel)]="textFiletranslated" name="textFiletranslated" matInput placeholder="ecrivez votre traduction du texte ci dessus...">
         <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
       </mat-form-field>
 
@@ -32,8 +32,7 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button  mat-raised-button mat-dialog-close color="warn">Annuler</button>
-
-    <button type="submit"
+    <button type="submit" [disabled]="this.textFiletranslated.length<5"
       mat-button mat-raised-button color="primary"
        cdkFocusInitial>Envoyez</button>
   </mat-dialog-actions>

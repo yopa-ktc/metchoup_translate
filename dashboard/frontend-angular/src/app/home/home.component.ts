@@ -11,6 +11,7 @@ import { DialogContentExampleDialogComponent } from '../dialog-content-example-d
 import { DialogFromFileComponent } from '../dialog-from-file/dialog-from-file.component';
 import { ExpressionObject } from '../Entities/expression-object';
 import { UsersService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -38,9 +39,9 @@ export class HomeComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<Suggestion>;
   selection = new SelectionModel<Suggestion>(true, []);
   languageToTranslate = ""
-  expressionAndLine!: ExpressionObject;
+  expressionInfos!: ExpressionObject;
 
-  constructor(private suggestionService : SuggestionService, private userService : UsersService, private manageFileService: ManageFileService, public dialog: MatDialog){}
+  constructor(private router: Router, private suggestionService : SuggestionService, private userService : UsersService, private manageFileService: ManageFileService, public dialog: MatDialog){}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -154,16 +155,17 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     onLanguageSelected(language: string){
       this.spinnerView = true;
-      this.manageFileService.getExpressionFile(language).subscribe((
+      this.manageFileService.getExpressionFile(language, this.userService.isConnected().name).subscribe((
 
           Resultat_requete: ExpressionObject) => {
             this.spinnerView = false;
-          this.expressionAndLine = Resultat_requete
+          this.expressionInfos = Resultat_requete
           const dialogRef = this.dialog.open(DialogFromFileComponent, {
             data: {
-                expression: this.expressionAndLine.currentTextToTranslate,
-                lang: language,
-                currentLine: this.expressionAndLine.currentLine
+                expression: this.expressionInfos.currentTextToTranslate,
+                currentLine: this.expressionInfos.currentLine,
+                occurencyTeacher: this.expressionInfos.occurencyTeacher,
+                lang: language
             },
           });
 
@@ -174,5 +176,10 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     }
 
+  logout(){
+    this.userService.logout()
+    this.router.navigate(['/login']);
+    window.location.reload();
+  }
 
 }

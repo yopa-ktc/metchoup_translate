@@ -26,7 +26,9 @@ export class UsersService {
     {email:"Kevinemaffo96@gmail.com",language: "ghomala"},
     {email:"zambopatrick7@gmail.com", language: "fangBeti"},
     {email:"Sophiedonalde03@gmail.com", language: "bassa"},
-    {email:"dorakilanga@gmail.com", language: "swahili"}
+    {email:"dorakilanga@gmail.com", language: "swahili"},
+    {email:"elviskdo@gmail.com", language: "ghomala"},
+    {email:"henrikuetche6@gmail.com", language: "nguemba"}
   ]
 
 

@@ -19,6 +19,7 @@ export class AppComponent {
 
   constructor(private router: Router, private userService: UsersService) { }
 
+
   ngOnInit(){
     this.userData = this.userService.isConnected()
     if(!this.userData){

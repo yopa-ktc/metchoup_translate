@@ -4,6 +4,7 @@
   <div class="filter-container">
     <button (click)="onLanguageSelected(languageToTranslate)" mat-raised-button color="primary">Ajouter une traduction de {{languageToTranslate}}</button>
   </div>
+  <button (click)="logout()" id="close-session" mat-raised-button color="warn">Fermer X</button>
   <div class="spinner" *ngIf=this.spinnerView></div>
   <mat-form-field class="searchBlock">
     <mat-label>Recherchez dans le tableau</mat-label>
